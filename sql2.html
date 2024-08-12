@@ -1,0 +1,31 @@
+mysql> TRUNCATE TABLE employee;
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> DESC employee;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | NO   | PRI | NULL    |       |
+| ename   | varchar(32) | NO   |     | NULL    |       |
+| esal    | float       | NO   |     | NULL    |       |
+| buId    | int         | YES  | MUL | NULL    |       |
+| dept_id | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.07 sec)
+
+mysql> INSERT INTO employee
+    -> VALUES(101,'Rahul',45000,10,1001),
+    -> (102,'Sonia',50000,11,1001),
+    -> (103,'Priya',55000,11,1001);
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee;
++-----+-------+-------+------+---------+
+| eid | ename | esal  | buId | dept_id |
++-----+-------+-------+------+---------+
+| 101 | Rahul | 45000 |   10 |    1001 |
+| 102 | Sonia | 50000 |   11 |    1001 |
+| 103 | Priya | 55000 |   11 |    1001 |
++-----+-------+-------+------+---------+
+3 rows in set (0.01 sec)
