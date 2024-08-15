@@ -1,0 +1,177 @@
+
+mysql> desc employee;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| eid   | int         | NO   | PRI | NULL    |       |
+| fname | varchar(34) | NO   |     | NULL    |       |
+| iname | varchar(35) | YES  |     | NULL    |       |
+| esal  | int         | YES  |     | NULL    |       |
+| age   | int         | NO   |     | NULL    |       |
+| loc   | varchar(35) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> SELECT * FROM employee;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | raju   | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | modi     | kanth  | 465000 |  72 | new delhi |
+| 105 | rajini   | vadra  |  24600 |  38 | chirala   |
+| 106 | keerthi  | null   | 475000 |  25 | null      |
++-----+----------+--------+--------+-----+-----------+
+6 rows in set (0.11 sec)
+
+mysql> SELECT * from employee
+    -> WHERE city = 'New Delhi' AND age > 70;
+ERROR 1054 (42S22): Unknown column 'city' in 'where clause'
+mysql> SELECT * from employee
+    -> WHERE eloc = 'New Delhi' AND age > 70;
+ERROR 1054 (42S22): Unknown column 'eloc' in 'where clause'
+mysql>
+mysql>
+mysql> SELECT * from employee
+    -> WHERE loc = 'New Delhi' AND age > 70;
++-----+-------+-------+--------+-----+-----------+
+| eid | fname | iname | esal   | age | loc       |
++-----+-------+-------+--------+-----+-----------+
+| 104 | modi  | kanth | 465000 |  72 | new delhi |
++-----+-------+-------+--------+-----+-----------+
+1 row in set (0.03 sec)
+
+mysql>
+mysql>
+mysql>
+mysql>
+mysql> SELECT * from employee
+    -> WHERE esal>50000;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | raju   | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | modi     | kanth  | 465000 |  72 | new delhi |
+| 106 | keerthi  | null   | 475000 |  25 | null      |
++-----+----------+--------+--------+-----+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * from employee
+    -> WHERE esal<50000;
++-----+--------+-------+-------+-----+---------+
+| eid | fname  | iname | esal  | age | loc     |
++-----+--------+-------+-------+-----+---------+
+| 105 | rajini | vadra | 24600 |  38 | chirala |
++-----+--------+-------+-------+-----+---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * from employee
+    -> WHERE esal BETWEEN 200000 AND 750000;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | raju   | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | modi     | kanth  | 465000 |  72 | new delhi |
+| 106 | keerthi  | null   | 475000 |  25 | null      |
++-----+----------+--------+--------+-----+-----------+
+5 rows in set (0.10 sec)
+
+mysql> SELECT * FROM employee
+    -> WHERE ESAL =7890;
+Empty set (0.00 sec)
+
+mysql> UPDATE employee
+    -> SET fname='moji'
+    -> WHERE eid=104;
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * from employee;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | raju   | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | moji     | kanth  | 465000 |  72 | new delhi |
+| 105 | rajini   | vadra  |  24600 |  38 | chirala   |
+| 106 | keerthi  | null   | 475000 |  25 | null      |
++-----+----------+--------+--------+-----+-----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * from employee
+    -> WHERE fname LIKE '%j__';
+Empty set (0.05 sec)
+
+mysql> SELECT * from employee
+    -> WHERE SUBSTRING(fname, 3, 1) = 'j';
++-----+--------+-------+--------+-----+-----------+
+| eid | fname  | iname | esal   | age | loc       |
++-----+--------+-------+--------+-----+-----------+
+| 104 | moji   | kanth | 465000 |  72 | new delhi |
+| 105 | rajini | vadra |  24600 |  38 | chirala   |
++-----+--------+-------+--------+-----+-----------+
+2 rows in set (0.02 sec)
+
+mysql> SELECT * from employee
+    -> WHERE SUBSTRING(fname, 4, 1) = 'y';
++-----+----------+-------+--------+-----+------+
+| eid | fname    | iname | esal   | age | loc  |
++-----+----------+-------+--------+-----+------+
+| 103 | priyanka | shaw  | 734000 |  40 | bng  |
++-----+----------+-------+--------+-----+------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> SELECT * from employee
+    -> WHERE SUBSTRING(fname, 3, 1) = 'j' AND loc = 'New Delhi';
++-----+-------+-------+--------+-----+-----------+
+| eid | fname | iname | esal   | age | loc       |
++-----+-------+-------+--------+-----+-----------+
+| 104 | moji  | kanth | 465000 |  72 | new delhi |
++-----+-------+-------+--------+-----+-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*)
+    -> FROM employee
+    -> WHERE SUBSTRING(fname, 3, 1) = 'j';
++----------+
+| COUNT(*) |
++----------+
+|        2 |
++----------+
+1 row in set (0.04 sec)
+
+mysql>
+mysql>
+mysql> SELECT * from employee
+    -> ORDER BY esal AND
+    -> UPDATE employee
+    -> SET esal = esal + 10000
+    -> WHERE eid=105;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UPDATE employee
+SET esal = esal + 10000
+WHERE eid=105' at line 3
+mysql> UPDATE employee
+    -> SET esal = esal + 10000
+    -> WHERE eid=105;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | raju   | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | moji     | kanth  | 465000 |  72 | new delhi |
+| 105 | rajini   | vadra  |  34600 |  38 | chirala   |
+| 106 | keerthi  | null   | 475000 |  25 | null      |
++-----+----------+--------+--------+-----+-----------+
+6 rows in set (0.00 sec)
