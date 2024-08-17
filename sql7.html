@@ -1,0 +1,169 @@
+CREATE TABLE employee(
+    -> eid int,
+    -> fname varchar(34) NOT NULL,
+    -> iname varchar(35),
+    -> esal int,
+    -> age int NOT NULL,
+    -> loc varchar(35),
+    -> PRIMARY KEY(eid)
+    -> );
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> desc employee;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| eid   | int         | NO   | PRI | NULL    |       |
+| fname | varchar(34) | NO   |     | NULL    |       |
+| iname | varchar(35) | YES  |     | NULL    |       |
+| esal  | int         | YES  |     | NULL    |       |
+| age   | int         | NO   |     | NULL    |       |
+| loc   | varchar(35) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee
+    -> VALUES(101,'jaanu','Gandhi',234000,52,'wayand'),
+    ->       (102,'sonia','Gandhi',435000,78,'wayand'),
+    ->       (103,'priyanka','shaw',734000,40,'bng'),
+    ->       (104,'modi','kanth',465000,72,'new delhi'),
+    ->       (105,'rajini','vadra',24600,38,'chirala'),
+    ->       (106,'keerthi','null',475000,25,'new delhi');
+Query OK, 6 rows affected (0.09 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | Gandhi | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | modi     | kanth  | 465000 |  72 | new delhi |
+| 105 | rajini   | vadra  |  24600 |  38 | chirala   |
+| 106 | keerthi  | null   | 475000 |  25 | new delhi |
++-----+----------+--------+--------+-----+-----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employee
+    -> WHERE loc IN ('Bangalore', 'Wayanad');
+Empty set (0.00 sec)
+
+mysql> SELECT * from employee
+    -> WHERE loc IN ('bng', 'wayand');
++-----+----------+--------+--------+-----+--------+
+| eid | fname    | iname  | esal   | age | loc    |
++-----+----------+--------+--------+-----+--------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand |
+| 102 | sonia    | Gandhi | 435000 |  78 | wayand |
+| 103 | priyanka | shaw   | 734000 |  40 | bng    |
++-----+----------+--------+--------+-----+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT fname
+    -> FROM employee
+    -> GROUP BY fname
+    -> HAVING COUNT(*) = 5;
+Empty set (0.00 sec)
+
+mysql> SELECT fname
+    -> FROM employee
+    -> HAVING COUNT(*) = 5;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column '10am.employee.fname'; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT age, COUNT(*) AS number_of_employee
+    -> FROM employee
+    -> GROUP BY age
+    -> ORDER BY age;
++-----+--------------------+
+| age | number_of_employee |
++-----+--------------------+
+|  25 |                  1 |
+|  38 |                  1 |
+|  40 |                  1 |
+|  52 |                  1 |
+|  72 |                  1 |
+|  78 |                  1 |
++-----+--------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM employee
+    -> WHERE salary IS NULL;
+ERROR 1054 (42S22): Unknown column 'salary' in 'where clause'
+mysql> SELECT *
+    -> FROM employee
+    -> WHERE esal IS NULL;
+Empty set (0.00 sec)
+
+mysql> SELECT *
+    -> FROM your_table_name
+    -> WHERE city IS NOT NULL;
+ERROR 1146 (42S02): Table '10am.your_table_name' doesn't exist
+mysql> SELECT *
+    -> FROM employee
+    -> WHERE eloc IS NOT NULL;
+ERROR 1054 (42S22): Unknown column 'eloc' in 'where clause'
+mysql> SELECT *
+    -> FROM employee
+    -> WHERE loc IS NOT NULL;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | Gandhi | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | modi     | kanth  | 465000 |  72 | new delhi |
+| 105 | rajini   | vadra  |  24600 |  38 | chirala   |
+| 106 | keerthi  | null   | 475000 |  25 | new delhi |
++-----+----------+--------+--------+-----+-----------+
+6 rows in set (0.00 sec)
+
+mysql> DELETE TABLE employee
+    -> WHERE eid=106;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE employee
+WHERE eid=106' at line 1
+mysql> DELETE EMPLOYEE
+    -> WHERE eid=106;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE eid=106' at line 2
+mysql> DELETE FROM employee
+    -> WHERE eid = 106;
+Query OK, 1 row affected (0.05 sec)
+
+mysql> SELECT * FROM employee
+    -> ;
++-----+----------+--------+--------+-----+-----------+
+| eid | fname    | iname  | esal   | age | loc       |
++-----+----------+--------+--------+-----+-----------+
+| 101 | jaanu    | Gandhi | 234000 |  52 | wayand    |
+| 102 | sonia    | Gandhi | 435000 |  78 | wayand    |
+| 103 | priyanka | shaw   | 734000 |  40 | bng       |
+| 104 | modi     | kanth  | 465000 |  72 | new delhi |
+| 105 | rajini   | vadra  |  24600 |  38 | chirala   |
++-----+----------+--------+--------+-----+-----------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT age, COUNT(*) AS number_of_employee
+    -> FROM employee
+    -> GROUP BY age
+    -> ORDER BY age
+    -> LIMIT 3;
++-----+--------------------+
+| age | number_of_employee |
++-----+--------------------+
+|  38 |                  1 |
+|  40 |                  1 |
+|  52 |                  1 |
++-----+--------------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT iname, COUNT(*) AS number_of_employee
+    -> FROM employee
+    -> WHERE loc = 'New Delhi'
+    -> GROUP BY iname
+    -> ORDER BY iname;
++-------+--------------------+
+| iname | number_of_employee |
++-------+--------------------+
+| kanth |                  1 |
++-------+--------------------+
